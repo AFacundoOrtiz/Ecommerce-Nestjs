@@ -8,12 +8,12 @@ export class ImgTypeValidationPipe implements PipeTransform {
     console.log('MIME TYPE DETECTADO:', file?.mimetype);
 
     if (!file) {
-      throw new BadRequestException('No se ha proporcionado ningún archivo.');
+      throw new BadRequestException('No file provided.');
     }
 
     if (!types.includes(file.mimetype)) {
       throw new BadRequestException(
-        'Tipo de archivo no permitido. Solo se aceptan imágenes JPG, PNG o WEBP.',
+        'File type not allowed. Only JPG, PNG, or WEBP images are accepted.',
       );
     }
 

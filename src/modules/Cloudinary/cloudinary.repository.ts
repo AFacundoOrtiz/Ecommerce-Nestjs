@@ -14,14 +14,14 @@ export class CloudinaryRepository {
     const product = await this.productRepository.findOne({ where: { id } });
 
     if (!product) {
-      throw new NotFoundException(`Producto con id ${id} no existe.`);
+      throw new NotFoundException(`Product with ID ${id} does not exist.`);
     }
 
     product.imgUrl = imgUrl;
     await this.productRepository.save(product);
 
     return {
-      message: 'Imagen subida con éxito.',
+      message: 'Image uploaded successfully.',
       product,
     };
   }

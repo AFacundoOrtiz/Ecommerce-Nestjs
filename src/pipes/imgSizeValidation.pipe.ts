@@ -6,11 +6,11 @@ export class ImgSizeValidationPipe implements PipeTransform {
     const max = 200 * 1024;
 
     if (!file) {
-      throw new BadRequestException('No se ha proporcionado ningún archivo.');
+      throw new BadRequestException('No file provided.');
     }
 
     if (file.size > max) {
-      throw new BadRequestException('La imagen no debe superar los 200KB.');
+      throw new BadRequestException('The image must not exceed 200KB.');
     }
 
     return file;

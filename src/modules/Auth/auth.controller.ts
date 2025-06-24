@@ -28,7 +28,7 @@ export class AuthController {
     const { email, password } = body;
 
     if (!email || !password) {
-      throw new BadRequestException('Campos obligatorios sin completar-');
+      throw new BadRequestException('Required fields empty.');
     }
 
     return this.authService.signin({ email, password });
@@ -41,6 +41,7 @@ export class AuthController {
   @Get('callback')
   @UseGuards(AuthGuard('auth0'))
   callback(@Req() req) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     return req.user;
   }
 }

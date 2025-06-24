@@ -5,7 +5,7 @@ import { isUUID } from 'class-validator';
 export class UuidValidationPipe implements PipeTransform {
   transform(value: string) {
     if (!isUUID(value)) {
-      throw new BadRequestException(`El ID ${value} no es un UUID válido.`);
+      throw new BadRequestException(`The ID ${value} is not a valid UUID.`);
     }
 
     return value;

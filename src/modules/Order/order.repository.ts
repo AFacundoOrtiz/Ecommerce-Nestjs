@@ -20,7 +20,7 @@ export class OrderRepository {
   async getOrder(id: string) {
     return this.orderRepository.findOne({
       where: { id },
-      relations: [`details`, `details.products`, `user`],
+      relations: [`orderDetail`],
     });
   }
 

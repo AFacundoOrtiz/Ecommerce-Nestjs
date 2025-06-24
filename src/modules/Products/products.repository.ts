@@ -160,7 +160,7 @@ export class ProductsRepository {
     });
 
     if (exist) {
-      throw new Error('Ya existe un producto con ese nombre.');
+      throw new Error('Already exist a product with this name.');
     }
 
     const category = await this.categoryRepository.findOne({
@@ -168,7 +168,7 @@ export class ProductsRepository {
     });
 
     if (!category) {
-      throw new Error(`La categoría "${product.category}" no existe.`);
+      throw new Error(`Category "${product.category}" does not exist.`);
     }
 
     const newProduct = this.productRepository.create({
@@ -185,10 +185,10 @@ export class ProductsRepository {
     const result = await this.productRepository.delete(id);
 
     if (result.affected === 0) {
-      throw new NotFoundException(`No se encontró el producto con ID ${id}`);
+      throw new NotFoundException(`Product with ID: ${id} not found.`);
     }
 
-    return `Producto con ID ${id} eliminado con éxito.`;
+    return `Product with ID: ${id} deleted.`;
   }
 
   async updateProduct(
@@ -198,7 +198,7 @@ export class ProductsRepository {
     const product = await this.productRepository.findOne({ where: { id } });
 
     if (!product) {
-      throw new NotFoundException(`No se encontró el producto con ID ${id}`);
+      throw new NotFoundException(`Product: ${id} not found.`);
     }
 
     const { category, ...rest } = updateData;
@@ -211,7 +211,7 @@ export class ProductsRepository {
       });
 
       if (!categoryEntity) {
-        throw new NotFoundException(`No se encontró la categoría ${category}`);
+        throw new NotFoundException(`Category: ${category} not found.`);
       }
 
       updatedFields.category = categoryEntity;
@@ -219,6 +219,6 @@ export class ProductsRepository {
 
     await this.productRepository.update(id, updatedFields);
 
-    return `Producto con ID ${id} modificado correctamente.`;
+    return `Product: ${id} updated.`;
   }
 }

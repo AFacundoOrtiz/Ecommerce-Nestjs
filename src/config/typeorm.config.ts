@@ -5,7 +5,7 @@ import { registerAs } from '@nestjs/config';
 dotenvConfig({ path: '.env.development' });
 
 if (!process.env.DB_PORT) {
-  throw new Error('Port no definido.');
+  throw new Error('Port not defined.');
 }
 
 export const databaseConfig: DataSourceOptions = {

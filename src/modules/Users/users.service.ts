@@ -55,7 +55,7 @@ export class UsersService {
   async updateRoles(id: string, role: UpdateRoleDto) {
     const user = await this.usersRepository.getById(id);
     if (!user) {
-      throw new BadRequestException("User doesn't exists.");
+      throw new BadRequestException('User does not exist.');
     }
     return await this.usersRepository.updateRoles(user, role);
   }
