@@ -10,12 +10,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { authGuard } from 'src/guards/auth.guards';
-import { UuidValidationPipe } from 'src/pipes/uuidValidation.pipe';
-import { RolesGuard } from 'src/guards/roles.guard';
-import { Roles } from 'src/decorators/role.decorator';
+import { authGuard } from '../../guards/auth.guards';
+import { UuidValidationPipe } from '../../pipes/uuidValidation.pipe';
+import { RolesGuard } from '../../guards/roles.guard';
+import { Roles } from '../../decorators/role.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { UpdateUserDto } from 'src/dtos/UpdateUserDto.dto';
+import { UpdateUserDto } from '../../dtos/UpdateUserDto.dto';
+import { UpdateRoleDto } from '../../dtos/UpdateRoleDto.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -62,6 +63,21 @@ export class UsersController {
       return await this.userService.updateUser(id, updateData);
     } catch (e) {
       throw new BadRequestException(`Information couldn't be upload. ${e}`);
+    }
+  }
+
+  @ApiBearerAuth('jwt')
+  @UseGuards(authGuard, RolesGuard)
+  @Roles('admin')
+  @Put('roles/:id') // Modifica los roles de un usuario pasado por ID.
+  async updateRoles(
+    @Param('id', UuidValidationPipe) id: string,
+    @Body() role: UpdateRoleDto,
+  ) {
+    try {
+      return this.userService.updateRoles(id, role);
+    } catch (e) {
+      throw new BadRequestException(`Roles couldn't be changed. Error: ${e}`);
     }
   }
 

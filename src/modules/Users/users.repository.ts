@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { UpdateUserDto } from 'src/dtos/UpdateUserDto.dto';
 import { RoleService } from '../Role/role.service';
+import { UpdateRoleDto } from 'src/dtos/UpdateRoleDto.dto';
 
 @Injectable()
 export class UsersRepository {
@@ -61,16 +66,7 @@ export class UsersRepository {
   }
 
   async updateUser(user: User, updateData: UpdateUserDto) {
-    if (updateData.roles && updateData.roles.length > 0) {
-      const roles = await this.roleService.findByNames(updateData.roles);
-      user.roles = roles;
-    }
-
-    const { roles, ...rest } = updateData;
-
-    console.log('Update Data:', updateData);
-
-    Object.assign(user, rest);
+    Object.assign(user, updateData);
 
     await this.userRepository.save(user);
     return `User updated succesfully.`;
@@ -78,5 +74,25 @@ export class UsersRepository {
 
   async findByEmail(email: string) {
     return await this.userRepository.findOne({ where: { email } });
+  }
+
+  async updateRoles(user: User, role: UpdateRoleDto) {
+    const roles = await this.roleService.findByNames(role.roles);
+
+    if (roles.length !== role.roles.length) {
+      const foundRoles = roles.map((r) => r.name);
+      const missing = role.roles.filter((r) => !foundRoles.includes(r));
+      throw new BadRequestException(
+        `Roles doesn't exist: ${missing.join(', ')}`,
+      );
+    }
+
+    user.roles = roles;
+    await this.userRepository.save(user);
+
+    return {
+      message: 'Roles updated successfully.',
+      roles: roles.map((r) => r.name),
+    };
   }
 }

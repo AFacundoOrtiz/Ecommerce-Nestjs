@@ -6,7 +6,6 @@ import {
   Matches,
   IsNumber,
   IsOptional,
-  IsArray,
 } from 'class-validator';
 export class UpdateUserDto {
   @ApiProperty({
@@ -73,13 +72,4 @@ export class UpdateUserDto {
   @IsString()
   @Length(5, 20)
   city?: string;
-
-  @ApiProperty({
-    description: 'Array of roles. API will assign an "user" role for default.',
-    example: ['user'],
-  })
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  roles: string[];
 }

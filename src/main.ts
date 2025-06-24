@@ -6,9 +6,12 @@ import { auth } from 'express-openid-connect';
 import { authZeroConfig } from './config/auth0.config';
 import * as session from 'express-session';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SeederModule } from './seeders/seeder.module';
+import { DatabaseSeeder } from './seeders/database.seeder';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.use(auth(authZeroConfig));
   app.use(loggerMiddle);
   app.useGlobalPipes(
@@ -18,6 +21,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
   app.use(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     session({
@@ -47,6 +51,10 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  if (process.env.RUN_SEEDER === 'true') {
+    await app.select(SeederModule).get(DatabaseSeeder).onApplicationBootstrap();
+  }
 
   await app.listen(process.env.PORT ?? 3000);
 }

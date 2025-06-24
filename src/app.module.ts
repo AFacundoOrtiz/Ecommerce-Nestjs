@@ -11,6 +11,7 @@ import { CloudinaryModule } from './modules/Cloudinary/cloudinary.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConfig } from './config/jwt.config';
 import { RoleModule } from './modules/Role/role.module';
+import { SeederModule } from './seeders/seeder.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { RoleModule } from './modules/Role/role.module';
     CategoryModule,
     CloudinaryModule,
     JwtModule.register(jwtConfig),
+    SeederModule,
   ],
   controllers: [],
   providers: [],

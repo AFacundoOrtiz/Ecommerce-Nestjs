@@ -4,7 +4,6 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   ManyToMany,
-  JoinTable,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { Category } from '../Category/category.entity';
@@ -36,6 +35,5 @@ export class Product {
   category: Category;
 
   @ManyToMany(() => OrderDetail, (detail) => detail.products)
-  @JoinTable()
   details: OrderDetail[];
 }

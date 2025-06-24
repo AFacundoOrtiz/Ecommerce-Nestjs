@@ -9,10 +9,10 @@ import {
 import { CloudinaryService } from './cloudinary.service';
 import { CloudinaryRepository } from './cloudinary.repository';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UuidValidationPipe } from 'src/pipes/uuidValidation.pipe';
-import { ImgSizeValidationPipe } from 'src/pipes/imgSizeValidation.pipe';
-import { ImgTypeValidationPipe } from 'src/pipes/imgTypeValidation.pipe';
-import { authGuard } from 'src/guards/auth.guards';
+import { UuidValidationPipe } from '../../pipes/uuidValidation.pipe';
+import { ImgSizeValidationPipe } from '../../pipes/imgSizeValidation.pipe';
+import { ImgTypeValidationPipe } from '../../pipes/imgTypeValidation.pipe';
+import { authGuard } from '../../guards/auth.guards';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -21,8 +21,8 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { RolesGuard } from 'src/guards/roles.guard';
-import { Roles } from 'src/decorators/role.decorator';
+import { RolesGuard } from '../../guards/roles.guard';
+import { Roles } from '../../decorators/role.decorator';
 
 @ApiTags('Files')
 @Controller('files')

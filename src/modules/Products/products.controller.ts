@@ -12,13 +12,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { authGuard } from 'src/guards/auth.guards';
+import { authGuard } from '../../guards/auth.guards';
 import { Product } from './product.entity';
-import { UuidValidationPipe } from 'src/pipes/uuidValidation.pipe';
-import { CreateProductDto } from 'src/dtos/CreateProductDto.dto';
-import { UpdateProductDto } from 'src/dtos/UpdateProductDto.dto';
-import { RolesGuard } from 'src/guards/roles.guard';
-import { Roles } from 'src/decorators/role.decorator';
+import { UuidValidationPipe } from '../../pipes/uuidValidation.pipe';
+import { CreateProductDto } from '../../dtos/CreateProductDto.dto';
+import { UpdateProductDto } from '../../dtos/UpdateProductDto.dto';
+import { RolesGuard } from '../../guards/roles.guard';
+import { Roles } from '../../decorators/role.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Products')

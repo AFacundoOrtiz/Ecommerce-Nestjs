@@ -16,10 +16,9 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  it('Get /users/ Returns an array of users with an OK status code.', async () => {
+    const req = await request(app.getHttpServer()).get('/users');
+    expect(req.status).toBe(200);
+    expect(req.body).toBeInstanceOf(Array);
   });
 });

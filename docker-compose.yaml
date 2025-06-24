@@ -1,31 +1,42 @@
-version: "3.8"
 
 services:
   backend: 
     build: .
-    container_name: nest-backend
-    restart: always
-    env_file:
-      - .env.development
+    container_name: ecommerce-backend
     ports:
       - "3000:3000"
+    env_file:
+      - .env.development
     depends_on:
-      - postgresdb
-    command: npm run start:prod
+      - db
+    volumes:
+      - .:/app
+    command: sh -c "npm run migration:run && npm run start:prod"
 
-postgres:
-  image: postgres:15
-  container_name: postgres-db
-  restart: always
-  environment:
-    POSTGRES_USER: youruser
-    POSTGRES_PASSWORD: yourpassword
-    POSTGRES_DB: yourdb 
-  ports:
-    - "5432:5432"
-  volumes:
-    - pgdata:/var/lib/postgresql/data
+  db:
+    image: postgres:16
+    container_name: ecommerce-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ecommerce 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ecommerce-pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - db
 
 volumes:
-  pgdata:
-  
+  postgres_data:

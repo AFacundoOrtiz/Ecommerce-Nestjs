@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '../Users/users.service';
 import { CreateUserDto } from 'src/dtos/CreateUserDto.dto';
-import { hashPassword } from 'src/helpers/hashPassword';
-import { validatePassword } from 'src/helpers/validatePassword';
+import { hashPassword } from '../../helpers/hashPassword';
+import { validatePassword } from '../../helpers/validatePassword';
 import { LoginUserDto } from 'src/dtos/LoginUserDto.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'src/types/jwt-payload.interface';
@@ -24,7 +24,7 @@ export class AuthService {
   async signup(user: CreateUserDto) {
     const checkUser = await this.usersService.findByEmail(user.email);
     if (checkUser) {
-      throw new BadRequestException('User already related with this email.');
+      throw new BadRequestException('An user already related with this email.');
     }
 
     const hash = await hashPassword(user.password);

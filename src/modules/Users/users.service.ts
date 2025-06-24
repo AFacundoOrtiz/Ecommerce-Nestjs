@@ -1,11 +1,18 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
 import { User } from './user.entity';
-import { UpdateUserDto } from 'src/dtos/UpdateUserDto.dto';
+import { UpdateUserDto } from '../../dtos/UpdateUserDto.dto';
+import { UpdateRoleDto } from '../../dtos/UpdateRoleDto.dto';
+import { hashPassword } from '../../helpers/hashPassword';
+import { RoleService } from '../Role/role.service';
+import { CreateUserDto } from '../../dtos/CreateUserDto.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private readonly roleService: RoleService,
+  ) {}
 
   async getUsersPaginated(pageNum: number, limitNum: number) {
     return await this.usersRepository.getUsersPaginated(pageNum, limitNum);
@@ -43,5 +50,54 @@ export class UsersService {
 
   async findByEmail(email: string) {
     return await this.usersRepository.findByEmail(email);
+  }
+
+  async updateRoles(id: string, role: UpdateRoleDto) {
+    const user = await this.usersRepository.getById(id);
+    if (!user) {
+      throw new BadRequestException("User doesn't exists.");
+    }
+    return await this.usersRepository.updateRoles(user, role);
+  }
+
+  async seedUsers() {
+    const users: CreateUserDto[] = [
+      {
+        name: 'Admin User',
+        email: 'admin@example.com',
+        password: 'admin.123!',
+        address: 'Example 738',
+        phone: 123456789,
+        country: 'Exampleland',
+        city: 'Example City',
+        roles: ['admin'],
+      },
+      {
+        name: 'Normal User',
+        email: 'user@example.com',
+        password: 'user.123!',
+        address: 'Example 738',
+        phone: 123456789,
+        country: 'Exampleland',
+        city: 'Example City',
+        roles: ['user'],
+      },
+    ];
+
+    for (const user of users) {
+      const existing = await this.usersRepository.findByEmail(user.email);
+      if (!existing) {
+        const hashedPassword = await hashPassword(user.password);
+        const roles = await this.roleService.findByNames(user.roles);
+
+        const newUser = await this.usersRepository.createUser({
+          ...user,
+          password: hashedPassword,
+          roles,
+        });
+
+        await this.usersRepository.createUser(newUser);
+      }
+    }
   }
 }
