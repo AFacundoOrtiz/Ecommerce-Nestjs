@@ -12,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConfig } from './config/jwt.config';
 import { RoleModule } from './modules/Role/role.module';
 import { SeederModule } from './seeders/seeder.module';
+import { OrdersModule } from './modules/Order/order.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { SeederModule } from './seeders/seeder.module';
     RoleModule,
     UsersModule,
     ProductsModule,
+    OrdersModule,
     AuthModule,
     CategoryModule,
     CloudinaryModule,
