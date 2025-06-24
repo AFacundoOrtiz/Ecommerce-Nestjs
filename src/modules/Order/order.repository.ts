@@ -4,7 +4,7 @@ import { Order } from './order.entity';
 import { OrderDetail } from '../OrderDetail/orderDetail.entity';
 import { User } from '../Users/user.entity';
 import { Product } from '../Products/product.entity';
-import { In, Repository } from 'typeorm';
+import { In, MoreThan, Repository } from 'typeorm';
 import { CreateOrderDto } from '../../dtos/CreateOrderDto.dto';
 
 @Injectable()
@@ -32,7 +32,10 @@ export class OrderRepository {
     const productIds = product.map((product) => product.id);
 
     const validProducts = await this.productRepository.find({
-      where: { id: In(productIds), stock: In([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) },
+      where: {
+        id: In(productIds),
+        stock: MoreThan(0),
+      },
     });
 
     let total = 0;
