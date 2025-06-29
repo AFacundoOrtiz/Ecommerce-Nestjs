@@ -34,7 +34,11 @@ export class UsersController {
     const pageNum = parseInt(page ?? '1');
     const limitNum = parseInt(limit ?? '5');
 
-    return await this.userService.getUsersPaginated(pageNum, limitNum);
+    try {
+      return await this.userService.getUsersPaginated(pageNum, limitNum);
+    } catch (e) {
+      throw new BadRequestException(`Request couldn't be completed: ${e}`);
+    }
   }
 
   /*@Post() //Crea un nuevo usuario.
@@ -46,7 +50,11 @@ export class UsersController {
   @UseGuards(authGuard)
   @Get(':id') // Retona un usuario por su ID.
   async getUserById(@Param('id', UuidValidationPipe) id: string) {
-    return await this.userService.getUserById(id);
+    try {
+      return await this.userService.getUserById(id);
+    } catch (e) {
+      throw new BadRequestException(`An error ocurred: ${e}`);
+    }
   }
 
   @ApiBearerAuth('jwt')
@@ -85,6 +93,10 @@ export class UsersController {
   @UseGuards(authGuard)
   @Delete(':id') // Elimina al usuario por ID.
   async deleteUser(@Param('id', UuidValidationPipe) id: string) {
-    return await this.userService.deleteUser(id);
+    try {
+      return await this.userService.deleteUser(id);
+    } catch (e) {
+      throw new BadRequestException(`User could not be deleted. Error: ${e}`);
+    }
   }
 }

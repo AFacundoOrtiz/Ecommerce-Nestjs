@@ -2,19 +2,28 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './order.entity';
 import { OrderDetail } from '../OrderDetail/orderDetail.entity';
-import { User } from '../Users/user.entity';
 import { Product } from '../Products/product.entity';
-import { In, MoreThan, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateOrderDto } from '../../dtos/CreateOrderDto.dto';
+import { UsersRepository } from '../Users/users.repository';
+import { ProductsRepository } from '../Products/products.repository';
+import { Category } from '../Category/category.entity';
+import { User } from '../Users/user.entity';
+import { Role } from '../Role/role.entity';
 
 @Injectable()
 export class OrderRepository {
   constructor(
     @InjectRepository(Order) private orderRepository: Repository<Order>,
     @InjectRepository(OrderDetail)
-    private orderDetailRepository: Repository<OrderDetail>,
-    @InjectRepository(User) private userRepository: Repository<User>,
+    private readonly orderDetailRepository: Repository<OrderDetail>,
     @InjectRepository(Product) private productRepository: Repository<Product>,
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>,
+    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Role) private roleRepository: Repository<Role>,
+    private usersRepo: UsersRepository,
+    private productsRepo: ProductsRepository,
   ) {}
 
   async getOrder(id: string) {
@@ -27,37 +36,37 @@ export class OrderRepository {
   async addOrder(createOrder: CreateOrderDto) {
     const { userId, product } = createOrder;
 
-    const user = await this.userRepository.findOneByOrFail({ id: userId });
+    const user = await this.usersRepo.getById(userId);
 
     const productIds = product.map((product) => product.id);
 
-    const validProducts = await this.productRepository.find({
-      where: {
-        id: In(productIds),
-        stock: MoreThan(0),
-      },
-    });
+    const foundProducts = await Promise.all(
+      productIds.map((id) => this.productsRepo.getProductById(id)),
+    );
 
-    let total = 0;
+    const validatedProducts = this.productsRepo.validateProducts(foundProducts);
 
-    for (const product of validProducts) {
-      total += Number(product.price);
-      product.stock -= 1;
-    }
+    await Promise.all(
+      validatedProducts.map((product) => this.productRepository.save(product)),
+    );
 
-    await this.productRepository.save(validProducts);
+    const total = validatedProducts.reduce(
+      (sum, product) => sum + Number(product.price),
+      0,
+    );
 
     const orderDetail = this.orderDetailRepository.create({
       price: total,
-      products: validProducts,
+      products: validatedProducts,
     });
     await this.orderDetailRepository.save(orderDetail);
 
-    const order = this.orderRepository.create({
-      user,
-      orderDetail: orderDetail,
-    });
+    const order = this.orderRepository.create({ user, orderDetail });
 
-    return this.orderRepository.save(order);
+    await this.orderRepository.save(order);
+    return {
+      message: 'Order created.',
+      orderDetail,
+    };
   }
 }

@@ -5,7 +5,6 @@ import { UpdateUserDto } from '../../dtos/UpdateUserDto.dto';
 import { UpdateRoleDto } from '../../dtos/UpdateRoleDto.dto';
 import { hashPassword } from '../../helpers/hashPassword';
 import { RoleService } from '../Role/role.service';
-import { CreateUserDto } from '../../dtos/CreateUserDto.dto';
 
 @Injectable()
 export class UsersService {
@@ -61,30 +60,7 @@ export class UsersService {
   }
 
   async seedUsers() {
-    const users: CreateUserDto[] = [
-      {
-        name: 'Admin User',
-        email: 'admin@example.com',
-        password: 'admin.123!',
-        address: 'Example 738',
-        phone: 123456789,
-        country: 'Exampleland',
-        city: 'Example City',
-        roles: ['admin'],
-      },
-      {
-        name: 'Normal User',
-        email: 'user@example.com',
-        password: 'user.123!',
-        address: 'Example 738',
-        phone: 123456789,
-        country: 'Exampleland',
-        city: 'Example City',
-        roles: ['user'],
-      },
-    ];
-
-    for (const user of users) {
+    for (const user of this.usersRepository.users) {
       const existing = await this.usersRepository.findByEmail(user.email);
       if (!existing) {
         const hashedPassword = await hashPassword(user.password);

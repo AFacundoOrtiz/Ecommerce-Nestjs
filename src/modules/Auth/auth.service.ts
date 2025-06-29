@@ -23,8 +23,9 @@ export class AuthService {
 
   async signup(user: CreateUserDto) {
     const checkUser = await this.usersService.findByEmail(user.email);
+
     if (checkUser) {
-      throw new BadRequestException('An user already related with this email.');
+      throw new BadRequestException('Email already used.');
     }
 
     const hash = await hashPassword(user.password);

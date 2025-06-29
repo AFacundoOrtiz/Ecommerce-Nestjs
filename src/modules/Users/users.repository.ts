@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { UpdateUserDto } from 'src/dtos/UpdateUserDto.dto';
 import { RoleService } from '../Role/role.service';
 import { UpdateRoleDto } from 'src/dtos/UpdateRoleDto.dto';
+import { CreateUserDto } from 'src/dtos/CreateUserDto.dto';
 
 @Injectable()
 export class UsersRepository {
@@ -16,6 +17,29 @@ export class UsersRepository {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly roleService: RoleService,
   ) {}
+
+  users: CreateUserDto[] = [
+    {
+      name: 'Admin User',
+      email: 'admin@example.com',
+      password: 'admin.123!',
+      address: 'Example 738',
+      phone: 123456789,
+      country: 'Exampleland',
+      city: 'Example City',
+      roles: ['admin'],
+    },
+    {
+      name: 'Normal User',
+      email: 'user@example.com',
+      password: 'user.123!',
+      address: 'Example 738',
+      phone: 123456789,
+      country: 'Exampleland',
+      city: 'Example City',
+      roles: ['user'],
+    },
+  ];
 
   async getUsersPaginated(pageNum = 1, limitNum = 5) {
     const [data, total] = await this.userRepository.findAndCount({

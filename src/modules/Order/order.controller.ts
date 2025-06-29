@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from '../../dtos/CreateOrderDto.dto';
 import { authGuard } from 'src/guards/auth.guards';
@@ -13,7 +21,11 @@ export class OrdersController {
   @UseGuards(authGuard)
   @Post() // Crea una orden.
   createOrder(@Body() createOrder: CreateOrderDto) {
-    return this.orderService.createOrder(createOrder);
+    try {
+      return this.orderService.createOrder(createOrder);
+    } catch (e) {
+      throw new BadRequestException(`Error creating the order: ${e}`);
+    }
   }
 
   @ApiBearerAuth('jwt')

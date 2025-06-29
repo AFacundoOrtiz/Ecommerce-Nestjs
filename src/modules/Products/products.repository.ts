@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 import { DeepPartial, Repository } from 'typeorm';
@@ -147,11 +151,15 @@ export class ProductsRepository {
     };
   }
 
-  async getProductById(id: string) {
-    return await this.productRepository.findOne({
+  async getProductById(id: string): Promise<Product> {
+    const product = await this.productRepository.findOne({
       where: { id },
       relations: ['category'],
     });
+    if (!product) {
+      throw new NotFoundException('Product not found.');
+    }
+    return product;
   }
 
   async createProduct(product: CreateProductDto): Promise<string> {
@@ -220,5 +228,19 @@ export class ProductsRepository {
     await this.productRepository.update(id, updatedFields);
 
     return `Product: ${id} updated.`;
+  }
+
+  validateProducts(products: Product[]) {
+    products.map((p) => {
+      if (!p) {
+        throw new NotFoundException('Product not found.');
+      }
+      if (p.stock <= 0) {
+        throw new BadRequestException('Out of stock.');
+      }
+      p.stock -= 1;
+      return p;
+    });
+    return products;
   }
 }

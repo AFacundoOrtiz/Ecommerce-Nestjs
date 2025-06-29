@@ -19,7 +19,7 @@ export class CategoryRepository {
     return true;
   }
 
-  async getCategories(): Promise<Category[]> {
+  /*async getCategories(): Promise<Category[]> {
     return this.categoryRepository.find();
-  }
+  }*/
 }
