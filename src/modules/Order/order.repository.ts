@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './order.entity';
 import { OrderDetail } from '../OrderDetail/orderDetail.entity';
@@ -7,9 +7,6 @@ import { Repository } from 'typeorm';
 import { CreateOrderDto } from '../../dtos/CreateOrderDto.dto';
 import { UsersRepository } from '../Users/users.repository';
 import { ProductsRepository } from '../Products/products.repository';
-import { Category } from '../Category/category.entity';
-import { User } from '../Users/user.entity';
-import { Role } from '../Role/role.entity';
 
 @Injectable()
 export class OrderRepository {
@@ -18,19 +15,22 @@ export class OrderRepository {
     @InjectRepository(OrderDetail)
     private readonly orderDetailRepository: Repository<OrderDetail>,
     @InjectRepository(Product) private productRepository: Repository<Product>,
-    @InjectRepository(Category)
-    private categoryRepository: Repository<Category>,
-    @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Role) private roleRepository: Repository<Role>,
     private usersRepo: UsersRepository,
     private productsRepo: ProductsRepository,
   ) {}
 
   async getOrder(id: string) {
-    return this.orderRepository.findOne({
-      where: { id },
-      relations: [`orderDetail`],
-    });
+    return this.orderRepository
+      .findOne({
+        where: { id },
+        relations: [`orderDetail`],
+      })
+      .then((order) => {
+        if (!order) {
+          throw new NotFoundException('Order do not exist.');
+        }
+        return order;
+      });
   }
 
   async addOrder(createOrder: CreateOrderDto) {
@@ -39,6 +39,7 @@ export class OrderRepository {
     const user = await this.usersRepo.getById(userId);
 
     const productIds = product.map((product) => product.id);
+    console.log(productIds);
 
     const foundProducts = await Promise.all(
       productIds.map((id) => this.productsRepo.getProductById(id)),
@@ -66,7 +67,9 @@ export class OrderRepository {
     await this.orderRepository.save(order);
     return {
       message: 'Order created.',
-      orderDetail,
+      id: order.id,
+      total: orderDetail.price,
+      list: validatedProducts.map((product) => product.name),
     };
   }
 }

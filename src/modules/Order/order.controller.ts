@@ -32,6 +32,10 @@ export class OrdersController {
   @UseGuards(authGuard)
   @Get(`:id`) // Retorna una orden de compra por ID.
   getOrderById(@Param('id') id: string) {
-    return this.orderService.getOrderById(id);
+    try {
+      return this.orderService.getOrderById(id);
+    } catch (e) {
+      throw new BadRequestException(`Error: ${e}`);
+    }
   }
 }

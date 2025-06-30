@@ -152,14 +152,17 @@ export class ProductsRepository {
   }
 
   async getProductById(id: string): Promise<Product> {
-    const product = await this.productRepository.findOne({
-      where: { id },
-      relations: ['category'],
-    });
-    if (!product) {
-      throw new NotFoundException('Product not found.');
-    }
-    return product;
+    return this.productRepository
+      .findOne({
+        where: { id },
+        relations: ['category'],
+      })
+      .then((product) => {
+        if (!product) {
+          throw new NotFoundException('Product nor found.');
+        }
+        return product;
+      });
   }
 
   async createProduct(product: CreateProductDto): Promise<string> {

@@ -13,28 +13,16 @@ export class CreateOrderDto {
   userId: string;
 
   @ApiProperty({
-    description: 'An array of products.',
+    description: 'An array of product IDs.',
     example: [
       {
         id: 'e90bc0a5-d1ce-48f8-8653-6fa57b701742',
-        name: 'Iphone 15',
-        description: 'The best smartphone in the world',
-        price: 199.99,
-        category: 'smartphone',
       },
       {
         id: '5ca58258-fb0d-4e63-b290-426fadf66e59',
-        name: 'Samsung Galaxy S23',
-        description: 'The best smartphone in the world',
-        price: 150.0,
-        category: 'smartphone',
       },
       {
         id: '4e31bc69-d7e3-49c4-a6ef-6fc39045a894',
-        name: 'Motorola Edge 40',
-        description: 'The best smartphone in the world',
-        price: 179.89,
-        category: 'smartphone',
       },
     ],
   })
