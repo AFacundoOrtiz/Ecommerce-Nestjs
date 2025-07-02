@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
 export class LoginUserDto {
   @ApiProperty({
     description: 'Must be a valid email.',
-    example: 'facundoOrtiz@example.com',
+    example: 'admin@example.com',
   })
   @IsNotEmpty()
   @IsString()
@@ -14,7 +14,7 @@ export class LoginUserDto {
   @ApiProperty({
     description:
       'The password must contain at least one capital letter, one number, and one of these symbols: !@#$%^&*',
-    example: 'Facundo.13!',
+    example: 'Admin.123!',
   })
   @IsNotEmpty()
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,15}$/)

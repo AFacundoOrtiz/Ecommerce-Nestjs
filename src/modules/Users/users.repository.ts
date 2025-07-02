@@ -22,7 +22,7 @@ export class UsersRepository {
     {
       name: 'Admin User',
       email: 'admin@example.com',
-      password: 'admin.123!',
+      password: 'Admin.123!',
       address: 'Example 738',
       phone: 123456789,
       country: 'Exampleland',
@@ -32,7 +32,7 @@ export class UsersRepository {
     {
       name: 'Normal User',
       email: 'user@example.com',
-      password: 'user.123!',
+      password: 'User.123!',
       address: 'Example 738',
       phone: 123456789,
       country: 'Exampleland',

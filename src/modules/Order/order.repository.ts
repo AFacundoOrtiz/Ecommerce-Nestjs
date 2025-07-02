@@ -4,14 +4,14 @@ import { Order } from './order.entity';
 import { OrderDetail } from '../OrderDetail/orderDetail.entity';
 import { Product } from '../Products/product.entity';
 import { Repository } from 'typeorm';
-import { CreateOrderDto } from '../../dtos/CreateOrderDto.dto';
 import { UsersRepository } from '../Users/users.repository';
 import { ProductsRepository } from '../Products/products.repository';
 
 @Injectable()
 export class OrderRepository {
   constructor(
-    @InjectRepository(Order) private orderRepository: Repository<Order>,
+    @InjectRepository(Order)
+    private readonly orderRepository: Repository<Order>,
     @InjectRepository(OrderDetail)
     private readonly orderDetailRepository: Repository<OrderDetail>,
     @InjectRepository(Product) private productRepository: Repository<Product>,
@@ -23,7 +23,7 @@ export class OrderRepository {
     return this.orderRepository
       .findOne({
         where: { id },
-        relations: [`orderDetail`],
+        relations: [`orderDetail`, `orderDetail.products`],
       })
       .then((order) => {
         if (!order) {
@@ -33,43 +33,16 @@ export class OrderRepository {
       });
   }
 
-  async addOrder(createOrder: CreateOrderDto) {
-    const { userId, product } = createOrder;
-
-    const user = await this.usersRepo.getById(userId);
-
+  async findProducts(product: Product[]) {
     const productIds = product.map((product) => product.id);
-    console.log(productIds);
 
-    const foundProducts = await Promise.all(
-      productIds.map((id) => this.productsRepo.getProductById(id)),
-    );
-
-    const validatedProducts = this.productsRepo.validateProducts(foundProducts);
-
-    await Promise.all(
-      validatedProducts.map((product) => this.productRepository.save(product)),
-    );
-
-    const total = validatedProducts.reduce(
-      (sum, product) => sum + Number(product.price),
-      0,
-    );
-
-    const orderDetail = this.orderDetailRepository.create({
-      price: total,
-      products: validatedProducts,
-    });
-    await this.orderDetailRepository.save(orderDetail);
-
-    const order = this.orderRepository.create({ user, orderDetail });
-
-    await this.orderRepository.save(order);
-    return {
-      message: 'Order created.',
-      id: order.id,
-      total: orderDetail.price,
-      list: validatedProducts.map((product) => product.name),
-    };
+    try {
+      const foundProducts = await Promise.all(
+        productIds.map((id) => this.productsRepo.getProductById(id)),
+      );
+      return foundProducts;
+    } catch (e) {
+      throw new NotFoundException(`Products not found. Error: ${e}`);
+    }
   }
 }
