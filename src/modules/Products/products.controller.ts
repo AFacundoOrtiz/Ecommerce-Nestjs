@@ -28,7 +28,10 @@ export class ProductsController {
 
   /*@Post('seeder') // Precarga de datos.
   async seed() {
+  try {
     return await this.productsService.seedProducts();
+  } catch(e) {
+   throw new BadRequestException(`Error executing seeder: ${e}`)}
   }*/
 
   @Get() // Lista de todos los productos paginados.

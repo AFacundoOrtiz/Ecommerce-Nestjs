@@ -19,7 +19,7 @@ export class OrdersController {
 
   @ApiBearerAuth('jwt')
   @UseGuards(authGuard)
-  @Post() // Crea una orden.
+  @Post() // Crea una orden y la retorna con los detalles de la compra.
   createOrder(@Body() createOrder: CreateOrderDto) {
     try {
       return this.orderService.createOrder(createOrder);

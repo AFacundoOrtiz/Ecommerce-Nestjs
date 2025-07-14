@@ -5,18 +5,18 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Category } from '../Category/category.entity';
 import { categoryCreated } from '../Category/category.interface';
 import { CreateProductDto } from 'src/dtos/CreateProductDto.dto';
-import { UpdateProductDto } from 'src/dtos/UpdateProductDto.dto';
 
 @Injectable()
 export class ProductsRepository {
   constructor(
-    @InjectRepository(Product) private productRepository: Repository<Product>,
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,
     @InjectRepository(Category)
-    private categoryRepository: Repository<Category>,
+    private readonly categoryRepository: Repository<Category>,
   ) {}
 
   products: CreateProductDto[] = [
@@ -159,37 +159,10 @@ export class ProductsRepository {
       })
       .then((product) => {
         if (!product) {
-          throw new NotFoundException('Product nor found.');
+          throw new NotFoundException('Product not found.');
         }
         return product;
       });
-  }
-
-  async createProduct(product: CreateProductDto): Promise<string> {
-    const exist = await this.productRepository.findOne({
-      where: { name: product.name },
-    });
-
-    if (exist) {
-      throw new Error('Already exist a product with this name.');
-    }
-
-    const category = await this.categoryRepository.findOne({
-      where: { name: product.category },
-    });
-
-    if (!category) {
-      throw new Error(`Category "${product.category}" does not exist.`);
-    }
-
-    const newProduct = this.productRepository.create({
-      ...product,
-      category,
-    });
-
-    await this.productRepository.save(newProduct);
-
-    return `Product: "${product.name}" uploaded.`;
   }
 
   async deleteProduct(id: string) {
@@ -200,37 +173,6 @@ export class ProductsRepository {
     }
 
     return `Product with ID: ${id} deleted.`;
-  }
-
-  async updateProduct(
-    id: string,
-    updateData: UpdateProductDto,
-  ): Promise<string> {
-    const product = await this.productRepository.findOne({ where: { id } });
-
-    if (!product) {
-      throw new NotFoundException(`Product: ${id} not found.`);
-    }
-
-    const { category, ...rest } = updateData;
-
-    const updatedFields: DeepPartial<Product> = { ...rest };
-
-    if (category) {
-      const categoryEntity = await this.categoryRepository.findOne({
-        where: { name: category },
-      });
-
-      if (!categoryEntity) {
-        throw new NotFoundException(`Category: ${category} not found.`);
-      }
-
-      updatedFields.category = categoryEntity;
-    }
-
-    await this.productRepository.update(id, updatedFields);
-
-    return `Product: ${id} updated.`;
   }
 
   validateProducts(products: Product[]) {
