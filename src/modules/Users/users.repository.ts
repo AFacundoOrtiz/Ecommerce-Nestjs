@@ -20,6 +20,16 @@ export class UsersRepository {
 
   users: CreateUserDto[] = [
     {
+      name: 'Super Admin User',
+      email: 'superadmin@example.com',
+      password: 'Superadmin.123!',
+      address: 'Example 738',
+      phone: 123456789,
+      country: 'Exampleland',
+      city: 'Example City',
+      roles: ['superadmin'],
+    },
+    {
       name: 'Admin User',
       email: 'admin@example.com',
       password: 'Admin.123!',
@@ -116,7 +126,7 @@ export class UsersRepository {
 
     return {
       message: 'Roles updated successfully.',
-      roles: roles.map((r) => r.name),
+      user,
     };
   }
 }

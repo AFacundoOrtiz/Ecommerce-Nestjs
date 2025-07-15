@@ -25,7 +25,7 @@ export class UsersController {
 
   @ApiBearerAuth('jwt')
   @UseGuards(authGuard, RolesGuard)
-  @Roles('admin')
+  @Roles('superadmin')
   @Get() // Retorna todos los usuarios paginados.
   async getUsers(
     @Query('page') page?: string | null,
@@ -76,7 +76,7 @@ export class UsersController {
 
   @ApiBearerAuth('jwt')
   @UseGuards(authGuard, RolesGuard)
-  @Roles('admin')
+  @Roles('superadmin')
   @Put('roles/:id') // Modifica los roles de un usuario pasado por ID.
   async updateRoles(
     @Param('id', UuidValidationPipe) id: string,

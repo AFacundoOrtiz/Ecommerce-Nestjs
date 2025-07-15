@@ -31,9 +31,6 @@ export class UsersService {
 
   async updateUser(id: string, updateData: UpdateUserDto) {
     const user = await this.usersRepository.getById(id);
-    if (!user) {
-      throw new BadRequestException('User does not exist.');
-    }
 
     if (updateData.email && updateData.email !== user.email) {
       const relatedEmail = await this.usersRepository.findByEmail(
@@ -53,9 +50,6 @@ export class UsersService {
 
   async updateRoles(id: string, role: UpdateRoleDto) {
     const user = await this.usersRepository.getById(id);
-    if (!user) {
-      throw new BadRequestException('User does not exist.');
-    }
     return await this.usersRepository.updateRoles(user, role);
   }
 

@@ -21,7 +21,7 @@ export class RoleService {
   }
 
   async preloadDefaultRoles() {
-    const defaultRoles = ['user', 'admin', 'seller', 'moderator'];
+    const defaultRoles = ['user', 'admin', 'superadmin'];
 
     for (const roleName of defaultRoles) {
       const existing = await this.roleRepository.findOneBy({ name: roleName });

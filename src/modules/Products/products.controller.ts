@@ -80,6 +80,10 @@ export class ProductsController {
   @UseGuards(authGuard)
   @Delete(':id') // Eliminar un producto.
   async deleteProduct(@Param('id', UuidValidationPipe) id: string) {
-    return await this.productsService.deleteProduct(id);
+    try {
+      return await this.productsService.deleteProduct(id);
+    } catch (e) {
+      throw new BadRequestException(`Error ocurred: ${e}`);
+    }
   }
 }
