@@ -65,7 +65,9 @@ export class ProductsService {
   }
 
   async deleteProduct(id: string) {
-    return await this.productsRepository.deleteProduct(id);
+    const product = await this.productsRepository.getProductById(id);
+    await this.productDBRepository.delete(product.id);
+    return `Product: "${product.name}" deleted.`;
   }
 
   async updateProduct(id: string, updateData: UpdateProductDto) {

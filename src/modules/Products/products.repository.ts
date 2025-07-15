@@ -165,16 +165,6 @@ export class ProductsRepository {
       });
   }
 
-  async deleteProduct(id: string) {
-    const result = await this.productRepository.delete(id);
-
-    if (result.affected === 0) {
-      throw new NotFoundException(`Product with ID: ${id} not found.`);
-    }
-
-    return `Product with ID: ${id} deleted.`;
-  }
-
   validateProducts(products: Product[]) {
     products.map((p) => {
       if (!p) {
