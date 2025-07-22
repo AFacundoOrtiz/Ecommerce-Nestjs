@@ -19,4 +19,20 @@ export class DatabaseSeeder implements OnApplicationBootstrap {
     await this.categoryService.seedCategories();
     await this.productService.seedProducts();
   }
+
+  async seedRoles() {
+    await this.roleService.preloadDefaultRoles();
+  }
+
+  async seedUsers() {
+    await this.usersService.seedUsers();
+  }
+
+  async seedCategories() {
+    await this.categoryService.seedCategories();
+  }
+
+  async seedProducts() {
+    await this.productService.seedProducts();
+  }
 }

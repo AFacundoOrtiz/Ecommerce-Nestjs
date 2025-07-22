@@ -4,7 +4,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
@@ -13,7 +12,6 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { authGuard } from '../../guards/auth.guards';
-import { Product } from './product.entity';
 import { UuidValidationPipe } from '../../pipes/uuidValidation.pipe';
 import { CreateProductDto } from '../../dtos/CreateProductDto.dto';
 import { UpdateProductDto } from '../../dtos/UpdateProductDto.dto';
@@ -41,29 +39,36 @@ export class ProductsController {
   ) {
     const pageNum = parseInt(page ?? '1');
     const limitNum = parseInt(limit ?? '5');
-    return await this.productsService.getProductsPaginated(pageNum, limitNum);
+    try {
+      return await this.productsService.getProductsPaginated(pageNum, limitNum);
+    } catch (error) {
+      throw new BadRequestException(`Error: ${error}`);
+    }
   }
 
   @Get(':id') // Producto por ID.
   async getProductById(@Param('id', UuidValidationPipe) id: string) {
-    const product: Product | null =
-      await this.productsService.getProductById(id);
-    if (!product) {
-      throw new NotFoundException('Product not found');
+    try {
+      return await this.productsService.getProductById(id);
+    } catch (error) {
+      throw new BadRequestException(`Error: ${error}`);
     }
-    return product;
   }
 
   @ApiBearerAuth('jwt')
   @UseGuards(authGuard)
   @Post() // Crear un producto.
   async createProduct(@Body() product: CreateProductDto) {
-    return await this.productsService.createProduct(product);
+    try {
+      return await this.productsService.createProduct(product);
+    } catch (error) {
+      throw new BadRequestException(`Error: ${error}`);
+    }
   }
 
   @ApiBearerAuth('jwt')
   @UseGuards(authGuard, RolesGuard)
-  @Roles('admin')
+  @Roles('admin', 'superadmin')
   @Put(':id') // Actualizar un producto.
   updateProduct(
     @Param('id', UuidValidationPipe) id: string,

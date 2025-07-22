@@ -6,7 +6,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateOrderDto {
   @ApiProperty({
     description: 'User ID related with the order.',
-    example: '67a7bc81-3c2e-4d31-83b9-094c26e2c5d7',
+    example: '2dc6add8-f274-4f79-a6ef-8e9d3973c0c5',
   })
   @IsUUID()
   @IsNotEmpty()
@@ -16,13 +16,13 @@ export class CreateOrderDto {
     description: 'An array of product IDs.',
     example: [
       {
-        id: 'fe1f4d51-f89b-4842-b91c-e35ca2247d75',
+        id: '1720c4ee-7f2a-4536-9d4b-d67a598ad124',
       },
       {
-        id: '4b6f2431-9b43-4ba2-9f17-8a84639438ed',
+        id: 'e94290e2-8492-4f3f-aa15-9bd62483fb76',
       },
       {
-        id: '69bd2ec5-559c-42a3-9254-b0ff49e88d6e',
+        id: '11917af7-0831-4694-b76d-1b4eb9547df2',
       },
     ],
   })

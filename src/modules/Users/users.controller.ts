@@ -17,6 +17,7 @@ import { Roles } from '../../decorators/role.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from '../../dtos/UpdateUserDto.dto';
 import { UpdateRoleDto } from '../../dtos/UpdateRoleDto.dto';
+import { SelfOnlyGuard } from 'src/guards/selfOnly.guard';
 
 @ApiTags('Users')
 @Controller('users')
@@ -58,7 +59,7 @@ export class UsersController {
   }
 
   @ApiBearerAuth('jwt')
-  @UseGuards(authGuard)
+  @UseGuards(authGuard, SelfOnlyGuard)
   @Put(':id') // Modifica los datos el usuario.
   async updateUser(
     @Param('id', UuidValidationPipe) id: string,

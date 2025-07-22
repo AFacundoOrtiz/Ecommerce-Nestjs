@@ -34,7 +34,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Ecommerce API')
     .setDescription(
-      'API para ecommerce de productos, proyecto para módulo 4 Backend Henry',
+      'Esta API REST permite gestionar un sistema de e-commerce con autenticación JWT y control de roles. Incluye rutas protegidas para el manejo de usuarios, productos, categorías y órdenes. Los usuarios pueden registrarse, iniciar sesión y realizar compras. Los administradores tienen acceso a funcionalidades avanzadas como la creación de productos y gestión de usuarios. Todas las rutas están documentadas y protegidas según nivel de acceso. Ecommerce API REST for M4 Backend - Henry',
     )
     .setVersion('1.0')
     .addBearerAuth(

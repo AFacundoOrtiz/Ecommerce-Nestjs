@@ -20,7 +20,11 @@ export class AuthController {
 
   @Post('signup')
   async signup(@Body() user: CreateUserDto) {
-    return await this.authService.signup(user);
+    try {
+      return await this.authService.signup(user);
+    } catch (error) {
+      throw new BadRequestException(`Error: ${error}`);
+    }
   }
 
   @Post('signin')
@@ -31,10 +35,14 @@ export class AuthController {
       throw new BadRequestException('Required fields empty.');
     }
 
-    return this.authService.signin({ email, password });
+    try {
+      return this.authService.signin({ email, password });
+    } catch (error) {
+      throw new BadRequestException(`Error: ${error}`);
+    }
   }
 
-  @Get('login')
+  /*@Get('login')
   @UseGuards(AuthGuard('auth0'))
   login() {}
 
@@ -43,5 +51,5 @@ export class AuthController {
   callback(@Req() req) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     return req.user;
-  }
+  }*/
 }
