@@ -40,8 +40,8 @@
 
 ## 🛠️ Instalación y Configuración
 
-### 1. Clonar el repositorio
 ```bash
+### 1. Clonar el repositorio
 git clone <url-del-repositorio>
 cd Ecommerce-Nestjs
 
