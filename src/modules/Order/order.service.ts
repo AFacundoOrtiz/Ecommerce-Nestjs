@@ -32,17 +32,11 @@ export class OrderService {
 
     const findedProducts = await this.orderRepo.findProducts(product);
 
-    const validatedProducts =
-      this.productsRepo.validateProducts(findedProducts);
+    const validatedProducts = this.productsRepo.validateProducts(findedProducts);
 
-    await Promise.all(
-      validatedProducts.map((product) => this.productRepository.save(product)),
-    );
+    await Promise.all(validatedProducts.map((product) => this.productRepository.save(product)));
 
-    const total = validatedProducts.reduce(
-      (sum, product) => sum + Number(product.price),
-      0,
-    );
+    const total = validatedProducts.reduce((sum, product) => sum + Number(product.price), 0);
 
     const orderDetail = this.orderDetailRepository.create({
       price: total,

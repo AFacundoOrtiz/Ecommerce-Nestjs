@@ -14,23 +14,8 @@ import { RoleService } from '../Role/role.service';
 import { Role } from '../Role/role.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      Order,
-      OrderDetail,
-      Product,
-      Category,
-      User,
-      Role,
-    ]),
-  ],
+  imports: [TypeOrmModule.forFeature([Order, OrderDetail, Product, Category, User, Role])],
   controllers: [OrdersController],
-  providers: [
-    OrderService,
-    OrderRepository,
-    ProductsRepository,
-    UsersRepository,
-    RoleService,
-  ],
+  providers: [OrderService, OrderRepository, ProductsRepository, UsersRepository, RoleService],
 })
 export class OrdersModule {}

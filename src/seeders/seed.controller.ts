@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Controller,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { BadRequestException, Controller, Post, UseGuards } from '@nestjs/common';
 import { DatabaseSeeder } from './database.seeder';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { authGuard } from 'src/guards/auth.guards';

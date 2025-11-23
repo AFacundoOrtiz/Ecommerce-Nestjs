@@ -33,10 +33,7 @@ export class ProductsController {
   }*/
 
   @Get() // Lista de todos los productos paginados.
-  async getProducts(
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-  ) {
+  async getProducts(@Query('page') page?: string, @Query('limit') limit?: string) {
     const pageNum = parseInt(page ?? '1');
     const limitNum = parseInt(limit ?? '5');
     try {
@@ -70,10 +67,7 @@ export class ProductsController {
   @UseGuards(authGuard, RolesGuard)
   @Roles('admin', 'superadmin')
   @Put(':id') // Actualizar un producto.
-  updateProduct(
-    @Param('id', UuidValidationPipe) id: string,
-    @Body() updateData: UpdateProductDto,
-  ) {
+  updateProduct(@Param('id', UuidValidationPipe) id: string, @Body() updateData: UpdateProductDto) {
     try {
       return this.productsService.updateProduct(id, updateData);
     } catch (e) {

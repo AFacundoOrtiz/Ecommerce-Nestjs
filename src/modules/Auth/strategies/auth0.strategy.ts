@@ -17,13 +17,13 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
     });
   }
 
-  async validate(
-    accessToken: string,
-    refreshToken: string,
-    extraParams: any,
+  validate(
+    _accessToken: string,
+    _refreshToken: string,
+    _extraParams: any,
     profile: any,
-    done: Function,
-  ) {
+    done: (err: unknown, user: unknown, info?: unknown) => void,
+  ): void {
     const { id, displayName, emails, _json } = profile;
 
     const user = {
@@ -33,6 +33,6 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
       picture: _json.picture,
     };
 
-    return done(null, user);
+    done(null, user);
   }
 }

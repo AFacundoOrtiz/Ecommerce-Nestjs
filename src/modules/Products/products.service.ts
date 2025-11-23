@@ -23,8 +23,7 @@ export class ProductsService {
   async seedProducts() {
     const result: categoryCreated[] = [];
     for (const product of this.productsRepository.products) {
-      const created =
-        await this.productsRepository.addProductIfNotExists(product);
+      const created = await this.productsRepository.addProductIfNotExists(product);
       result.push(created);
     }
     return result;

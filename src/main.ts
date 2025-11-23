@@ -23,9 +23,8 @@ async function bootstrap() {
   );
 
   app.use(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     session({
-      secret: process.env.AUTH0_SECRET,
+      secret: process.env.JWT_SECRET || 'secret-default',
       resave: false,
       saveUninitialized: false,
     }),
@@ -50,6 +49,8 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
+
+  // AQUÍ SE DEFINE LA RUTA: 'api'
   SwaggerModule.setup('api', app, document);
 
   if (process.env.RUN_SEEDER === 'true') {
@@ -58,5 +59,5 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
+
 bootstrap();

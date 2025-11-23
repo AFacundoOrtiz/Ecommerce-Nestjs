@@ -1,12 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsEmail,
-  Length,
-  Matches,
-  IsNumber,
-  IsOptional,
-} from 'class-validator';
+import { IsString, IsEmail, Length, Matches, IsNumber, IsOptional } from 'class-validator';
 export class UpdateUserDto {
   @ApiProperty({
     description: 'Provide the user name.',
@@ -36,8 +29,7 @@ export class UpdateUserDto {
   password: string;
 
   @ApiProperty({
-    description:
-      'Optional field. The minimum number of characters is 3 and the maximum is 80.',
+    description: 'Optional field. The minimum number of characters is 3 and the maximum is 80.',
     example: 'Example 738',
   })
   @IsOptional()
@@ -54,8 +46,7 @@ export class UpdateUserDto {
   phone?: number;
 
   @ApiProperty({
-    description:
-      'Optional field. The minimum number of characters is 5 and the maximum is 20.',
+    description: 'Optional field. The minimum number of characters is 5 and the maximum is 20.',
     example: 'Exampleland',
   })
   @IsOptional()
@@ -64,8 +55,7 @@ export class UpdateUserDto {
   country?: string;
 
   @ApiProperty({
-    description:
-      'Optional field. The minimum number of characters is 5 and the maximum is 20.',
+    description: 'Optional field. The minimum number of characters is 5 and the maximum is 20.',
     example: 'New Example',
   })
   @IsOptional()

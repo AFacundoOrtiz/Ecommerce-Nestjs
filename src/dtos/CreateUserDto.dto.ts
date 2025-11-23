@@ -38,8 +38,7 @@ export class CreateUserDto {
   password: string;
 
   @ApiProperty({
-    description:
-      'Optional field. The minimum number of characters is 3 and the maximum is 80.',
+    description: 'Optional field. The minimum number of characters is 3 and the maximum is 80.',
     example: 'Example 738',
   })
   @IsNotEmpty()
@@ -56,8 +55,7 @@ export class CreateUserDto {
   phone?: number;
 
   @ApiProperty({
-    description:
-      'Optional field. The minimum number of characters is 5 and the maximum is 20.',
+    description: 'Optional field. The minimum number of characters is 5 and the maximum is 20.',
     example: 'Exampleland',
   })
   @IsNotEmpty()
@@ -66,8 +64,7 @@ export class CreateUserDto {
   country?: string;
 
   @ApiProperty({
-    description:
-      'Optional field. The minimum number of characters is 5 and the maximum is 20.',
+    description: 'Optional field. The minimum number of characters is 5 and the maximum is 20.',
     example: 'New Example',
   })
   @IsNotEmpty()

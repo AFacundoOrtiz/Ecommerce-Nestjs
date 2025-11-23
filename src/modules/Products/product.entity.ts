@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  ManyToMany,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { Category } from '../Category/category.entity';
 import { OrderDetail } from '../OrderDetail/orderDetail.entity';

@@ -28,10 +28,7 @@ export class UsersController {
   @UseGuards(authGuard, RolesGuard)
   @Roles('superadmin')
   @Get() // Retorna todos los usuarios paginados.
-  async getUsers(
-    @Query('page') page?: string | null,
-    @Query('limit') limit?: string,
-  ) {
+  async getUsers(@Query('page') page?: string | null, @Query('limit') limit?: string) {
     const pageNum = parseInt(page ?? '1');
     const limitNum = parseInt(limit ?? '5');
 
@@ -61,10 +58,7 @@ export class UsersController {
   @ApiBearerAuth('jwt')
   @UseGuards(authGuard, SelfOnlyGuard)
   @Put(':id') // Modifica los datos el usuario.
-  async updateUser(
-    @Param('id', UuidValidationPipe) id: string,
-    @Body() updateData: UpdateUserDto,
-  ) {
+  async updateUser(@Param('id', UuidValidationPipe) id: string, @Body() updateData: UpdateUserDto) {
     if (!updateData) {
       throw new BadRequestException('New information must be provided.');
     }
@@ -79,10 +73,7 @@ export class UsersController {
   @UseGuards(authGuard, RolesGuard)
   @Roles('superadmin')
   @Put('roles/:id') // Modifica los roles de un usuario pasado por ID.
-  async updateRoles(
-    @Param('id', UuidValidationPipe) id: string,
-    @Body() role: UpdateRoleDto,
-  ) {
+  async updateRoles(@Param('id', UuidValidationPipe) id: string, @Body() role: UpdateRoleDto) {
     try {
       return this.userService.updateRoles(id, role);
     } catch (e) {

@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../Users/users.service';
 import { CreateUserDto } from 'src/dtos/CreateUserDto.dto';
 import { hashPassword } from '../../helpers/hashPassword';
@@ -64,7 +60,7 @@ export class AuthService {
     };
 
     const token = this.jwtService.sign(payload);
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+
     const decoded = this.jwtService.decode(token) as JwtPayload;
 
     const { exp, iat } = decoded;

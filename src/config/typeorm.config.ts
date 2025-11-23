@@ -23,6 +23,4 @@ export const databaseConfig: DataSourceOptions = {
 
 export default registerAs('typeorm', () => databaseConfig);
 
-export const connectionSource = new DataSource(
-  databaseConfig as DataSourceOptions,
-);
+export const connectionSource = new DataSource(databaseConfig as DataSourceOptions);

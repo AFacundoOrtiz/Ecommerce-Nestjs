@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
@@ -11,7 +8,6 @@ import { UsersService } from '../Users/users.service';
 import { CreateUserDto } from 'src/dtos/CreateUserDto.dto';
 import { hashPassword } from '../../helpers/hashPassword';
 import { UnauthorizedException } from '@nestjs/common';
-import { toNamespacedPath } from 'path';
 
 describe('authSerice', () => {
   let authService: AuthService;
@@ -51,7 +47,7 @@ describe('authSerice', () => {
         }),
     };
     mockRoleService = {
-      findByNames: (name: string[]): Promise<Role[]> =>
+      findByNames: (_name: string[]): Promise<Role[]> =>
         Promise.resolve([
           {
             id: 'b1ca2345-6bb7-8dc9-bdb1-7b6a5cc432e1',
@@ -88,13 +84,12 @@ describe('authSerice', () => {
     authService = module.get<AuthService>(AuthService);
   });
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   it('Create an instance of AuthService', async () => {
     expect(authService).toBeDefined();
   });
 
   it(`signup() creates a new user with role "user" assigned  and returns it without password`, async () => {
-    mockUserService.findByEmail = (email: string) => Promise.resolve(null);
+    mockUserService.findByEmail = (_email: string) => Promise.resolve(null);
     const user = await authService.signup(mockUser);
     expect(user).toBeDefined();
     expect(mockUser.password).not.toEqual(hashPassword(mockUser.password));
@@ -127,11 +122,14 @@ describe('authSerice', () => {
       id: 'b1ca2345-6bb7-8dc9-bdb1-0b1a1cc121e3',
       orders: [],
       roles: [
-        { id: 'b1ca2345-6bb7-8dc9-bdb1-7b6a5cc432e1', name: 'user', users: [] },
+        {
+          id: 'b1ca2345-6bb7-8dc9-bdb1-7b6a5cc432e1',
+          name: 'user',
+          users: [],
+        },
       ],
     };
-    mockUserService.findByEmail = (email: string) =>
-      Promise.resolve(mockUserVariant as User);
+    mockUserService.findByEmail = (_email: string) => Promise.resolve(mockUserVariant as User);
     const user = await authService.signin({
       email: mockUserVariant.email,
       password: mockUser.password,

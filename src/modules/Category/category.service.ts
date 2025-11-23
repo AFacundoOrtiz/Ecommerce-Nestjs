@@ -24,13 +24,7 @@ export class CategoryService {
   }
 
   async seedCategories() {
-    const categories = [
-      'smartphone',
-      'monitor',
-      'keyboard',
-      'mouse',
-      'pet toy',
-    ];
+    const categories = ['smartphone', 'monitor', 'keyboard', 'mouse', 'pet toy'];
     const categoryCreated: categoryCreated[] = [];
 
     for (const name of categories) {

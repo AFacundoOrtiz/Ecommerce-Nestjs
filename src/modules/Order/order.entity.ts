@@ -1,11 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
 import { User } from '../Users/user.entity';
 import { OrderDetail } from '../OrderDetail/orderDetail.entity';
 import { v4 as uuid } from 'uuid';

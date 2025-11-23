@@ -1,98 +1,50 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+🛒 Ecommerce API - NestJS BackendAPI REST robusta diseñada para gestionar un sistema de comercio electrónico completo. Incluye autenticación segura, gestión de roles, carga de archivos y procesamiento de órdenes. Desarrollada como parte de la especialización en Backend (Módulo 4 - SoyHenry).✨ Características PrincipalesAutenticación Híbrida: Soporte para Login tradicional y OAuth mediante Auth0.Autorización por Roles: Protección de rutas mediante Guards y Roles (Admin/User).Gestión de Base de Datos: Persistencia de datos usando TypeORM con MySQL (migrado desde PostgreSQL).Carga de Archivos: Integración con Cloudinary para almacenamiento de imágenes de productos.Seeders Automáticos: Poblado inteligente de la base de datos para entornos de desarrollo.Documentación Viva: API documentada completamente con Swagger.Calidad de Código: Configuración estricta con ESLint y Prettier.🚀 Módulos de la APIMóduloDescripciónAuthRegistro (/signup) e inicio de sesión (/signin) con generación de JWT.UsersGestión de usuarios (CRUD), historial de compras y asignación de roles de administrador.ProductsCatálogo de productos con paginación, filtrado y gestión de stock.CategoriesClasificación de productos (creada vía Seeders).OrdersCreación de órdenes de compra con validación de stock y relación usuario-producto.FilesSubida de imágenes (multipart/form-data) vinculadas a productos.🛠️ Instalación y Configuración1. Clonar el repositoriogit clone <url-del-repositorio>
+cd Ecommerce-Nestjs
+2. Instalar dependenciasnpm install
+3. Configurar Variables de EntornoCrea un archivo llamado .env.development en la raíz del proyecto. Puedes copiar el siguiente template y rellenarlo con tus credenciales:# --- APP CONFIG ---
+PORT=3000
+HOST=http://localhost
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# --- DATABASE (MySQL) ---
+# Si usas Railway u otro servicio, usa las credenciales públicas
+DB_HOST=tu_host_mysql
+DB_PORT=3306
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
+DB_NAME=tu_base_de_datos
+DB_SYNC=false
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# --- SEEDER AUTOMÁTICO ---
+# true = Ejecuta el llenado de datos al iniciar la app
+RUN_SEEDER=true
 
-## Description
+# --- JWT ---
+JWT_SECRET=tu_secreto_super_seguro
+JWT_EXPIRATION=1h
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# --- CLOUDINARY ---
+CLOUDINARY_CLOUD_NAME=tu_cloud_name
+CLOUDINARY_API_KEY=tu_api_key
+CLOUDINARY_API_SECRET=tu_api_secret
 
-## Project setup
+# --- AUTH0 ---
+AUTH0_DOMAIN=tu-dominio.auth0.com
+AUTH0_CLIENT_ID=tu_client_id
+AUTH0_CLIENT_SECRET=tu_client_secret
+AUTH0_CALLBACK_URL=http://localhost:3000/callback
+4. Base de Datos y MigracionesEste proyecto utiliza Migraciones para gestionar el esquema de la base de datos.# Ejecutar migraciones (Crear tablas)
+npm run migration:run
 
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
+# (Opcional) Si haces cambios en las entidades y necesitas una nueva migración:
+# npm run migration:generate -- src/migrations/nombre_del_cambio
+5. Iniciar el Servidor# Modo desarrollo (con watch)
+npm run start:dev
+La API estará corriendo en: http://localhost:3000📚 Documentación (Swagger)Una vez iniciada la aplicación, puedes acceder a la documentación interactiva y probar los endpoints directamente desde el navegador:👉 URL: http://localhost:3000/apiDesde allí podrás:Ver todos los esquemas de datos (DTOs).Autenticarte (botón Authorize) pegando tu Token JWT.Ejecutar peticiones de prueba.🌱 Seeders (Poblado de Datos)El proyecto incluye un sistema de llenado de datos iniciales.Método Automático:Configura RUN_SEEDER=true en tu .env.development y reinicia el servidor. Se crearán automáticamente:RolesUsuarios de pruebaCategoríasProductosMétodo Manual (Endpoints):Puedes disparar los seeders individualmente desde Swagger bajo la etiqueta Seeders:POST /seed/rolesPOST /seed/usersPOST /seed/categoriesPOST /seed/products🧪 Testing# Unit tests
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Test coverage
+npm run test:cov
+📝 LicenciaEste proyecto está bajo la Licencia MIT.

@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
@@ -116,9 +112,7 @@ export class UsersRepository {
     if (roles.length !== role.roles.length) {
       const foundRoles = roles.map((r) => r.name);
       const missing = role.roles.filter((r) => !foundRoles.includes(r));
-      throw new BadRequestException(
-        `Roles doesn't exist: ${missing.join(', ')}`,
-      );
+      throw new BadRequestException(`Roles doesn't exist: ${missing.join(', ')}`);
     }
 
     user.roles = roles;

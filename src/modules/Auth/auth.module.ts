@@ -11,17 +11,8 @@ import { Auth0Strategy } from './strategies/auth0.strategy';
 import { PassportModule } from '@nestjs/passport';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User, Role]),
-    PassportModule.register({ session: true }),
-  ],
-  providers: [
-    AuthService,
-    UsersRepository,
-    UsersService,
-    RoleService,
-    Auth0Strategy,
-  ],
+  imports: [TypeOrmModule.forFeature([User, Role]), PassportModule.register({ session: true })],
+  providers: [AuthService, UsersRepository, UsersService, RoleService, Auth0Strategy],
   controllers: [AuthController],
 })
 export class AuthModule {}

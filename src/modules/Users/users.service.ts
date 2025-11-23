@@ -33,9 +33,7 @@ export class UsersService {
     const user = await this.usersRepository.getById(id);
 
     if (updateData.email && updateData.email !== user.email) {
-      const relatedEmail = await this.usersRepository.findByEmail(
-        updateData.email,
-      );
+      const relatedEmail = await this.usersRepository.findByEmail(updateData.email);
       if (relatedEmail) {
         throw new BadRequestException('Email already used.');
       }

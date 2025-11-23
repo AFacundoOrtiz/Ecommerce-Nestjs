@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Param,
-  Post,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CloudinaryService } from './cloudinary.service';
 import { CloudinaryRepository } from './cloudinary.repository';
 import { FileInterceptor } from '@nestjs/platform-express';
