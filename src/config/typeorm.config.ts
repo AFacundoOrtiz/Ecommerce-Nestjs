@@ -9,7 +9,7 @@ if (!process.env.DB_PORT) {
 }
 
 export const databaseConfig: DataSourceOptions = {
-  type: 'postgres',
+  type: 'mysql',
   database: process.env.DB_NAME,
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT, 10),

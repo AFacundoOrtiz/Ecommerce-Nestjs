@@ -1,9 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-auth0';
@@ -17,7 +11,7 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
     super({
       domain: process.env.AUTH0_DOMAIN,
       clientID: process.env.AUTH0_CLIENT_ID,
-      clientSecret: process.env.AUTH0_SECRET,
+      clientSecret: process.env.AUTH0_CLIENT_SECRET,
       callbackURL: process.env.AUTH0_CALLBACK_URL,
       scope: 'openid profile email',
     });
