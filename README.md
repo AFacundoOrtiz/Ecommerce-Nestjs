@@ -4,7 +4,9 @@
 
 <p align="center">
   API REST robusta para e-commerce. Gestión de usuarios, productos, órdenes y archivos con seguridad profesional.
-  
+</p>
+
+<p align="center">
   Developed for <strong>SoyHenry Backend Specialization</strong>
 </p>
 
