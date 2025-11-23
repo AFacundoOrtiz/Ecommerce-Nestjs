@@ -39,20 +39,20 @@
 | **Files** | `/files` | Upload de imágenes (`multipart/form-data`). |
 
 ## 🛠️ Instalación y Configuración
-
-### 1. Clonar el repositorio
+1. Clonar el repositorio
+Bash
 
 git clone <url-del-repositorio>
 cd Ecommerce-Nestjs
-2. Instalar dependencias
-Bash
 
+### 2. Instalar dependencias
+```bash
 npm install
-3. Configurar Variables de Entorno
-Crea un archivo .env.development en la raíz con el siguiente contenido:
 
-Properties
+### 3. Configurar Variables de Entorno
+Crea un archivo `.env.development` en la raíz con el siguiente contenido:
 
+```properties
 # --- APP ---
 PORT=3000
 HOST=http://localhost
@@ -84,36 +84,39 @@ AUTH0_DOMAIN=tu-dominio.auth0.com
 AUTH0_CLIENT_ID=tu_id
 AUTH0_CLIENT_SECRET=tu_secret
 AUTH0_CALLBACK_URL=http://localhost:3000/callback
-4. Base de Datos (Migraciones)
+
+### 4. Base de Datos (Migraciones)
 Este proyecto usa MySQL. Asegúrate de ejecutar las migraciones:
 
-Bash
-
+```bash
 npm run migration:run
-5. Ejecutar Servidor
-Bash
 
+### 5. Ejecutar Servidor
+```bash
 npm run start:dev
-📚 Documentación (Swagger)
+
+## 📚 Documentación (Swagger)
+
 Con el servidor corriendo, entra a:
 
-👉 http://localhost:3000/api
+👉 **[http://localhost:3000/api](http://localhost:3000/api)**
 
-Clic en el botón verde Authorize.
+1. Clic en el botón verde **Authorize**.
+2. Ingresa tu token JWT (obtenido en `/auth/signin`).
+3. Prueba los endpoints.
 
-Ingresa tu token JWT (obtenido en /auth/signin).
+## 🌱 Seeders (Datos de Prueba)
 
-Prueba los endpoints.
-
-🌱 Seeders (Datos de Prueba)
 El sistema incluye una carga automática de datos.
 
-Configura RUN_SEEDER=true en tu .env.development.
+1. Configura `RUN_SEEDER=true` en tu `.env.development`.
+2. Reinicia la aplicación (`npm run start:dev`).
+3. Verás en la consola que se crean usuarios, categorías y productos automáticamente.
 
-Reinicia la aplicación (npm run start:dev).
+**Nota:** Una vez cargados los datos, puedes cambiar la variable a `false` para iniciar más rápido.
 
-Verás en la consola que se crean usuarios, categorías y productos automáticamente.
+---
 
-Nota: Una vez cargados los datos, puedes cambiar la variable a false para iniciar más rápido.
-
-<p align="center"> Hecho con ❤️ para SoyHenry </p>
+<p align="center">
+  Hecho con ❤️ para SoyHenry
+</p>
