@@ -4,7 +4,7 @@
 
 <p align="center">
   API REST robusta para e-commerce. Gestión de usuarios, productos, órdenes y archivos con seguridad profesional.
-  <br>
+  
   Developed for <strong>SoyHenry Backend Specialization</strong>
 </p>
 
@@ -39,9 +39,9 @@
 | **Files** | `/files` | Upload de imágenes (`multipart/form-data`). |
 
 ## 🛠️ Instalación y Configuración
-1. Clonar el repositorio
-Bash
 
+### 1. Clonar el repositorio
+```bash
 git clone <url-del-repositorio>
 cd Ecommerce-Nestjs
 
