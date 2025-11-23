@@ -1,9 +1,15 @@
 <p align="center">
-<h1>🛒 Ecommerce API - NestJS Backend</h1>
+<h1 align="center">🛒 Ecommerce API - NestJS Backend</h1>
 </p>
 
 <p align="center">
-Avanzada API REST para e-commerce. Gestión de usuarios, productos, órdenes y archivos con seguridad robusta.
+API REST robusta para e-commerce. Gestión de usuarios, productos, órdenes y archivos.
+
+
+
+
+
+Developed for <strong>SoyHenry Backend Specialization</strong>
 </p>
 
 <p align="center">
@@ -15,23 +21,19 @@ Avanzada API REST para e-commerce. Gestión de usuarios, productos, órdenes y a
 <img src="https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white" alt="Swagger" />
 </p>
 
-<hr>
-
 ✨ Características Principales
 
 🔐 Autenticación Híbrida: Login tradicional y OAuth 2.0 integrado con Auth0.
 
-🛡️ Autorización RBAC: Control de acceso basado en roles (Admin/User) con Guards personalizados.
+🛡️ Autorización RBAC: Control de acceso basado en roles (Admin/User).
 
-🗄️ Persistencia Robusta: Implementación de MySQL en la nube (Railway) gestionada por TypeORM.
+🗄️ Persistencia Robusta: Implementación de MySQL en la nube (Railway) con TypeORM.
 
-☁️ Gestión de Archivos: Carga y almacenamiento optimizado de imágenes en Cloudinary.
+☁️ Gestión de Archivos: Carga de imágenes optimizada en Cloudinary.
 
-🌱 Seeders Inteligentes: Sistema automático para poblar la base de datos en entornos de desarrollo.
+🌱 Seeders Inteligentes: Poblado automático de base de datos para desarrollo.
 
-doc Documentación Viva: API totalmente documentada y testeable con Swagger.
-
-✨ Calidad de Código: Estandarización con ESLint y Prettier.
+📄 Documentación Viva: API explorables con Swagger.
 
 🚀 Módulos de la API
 
@@ -51,29 +53,27 @@ Users
 
 /users
 
-CRUD de usuarios y asignación de roles administrativos.
+CRUD de usuarios y roles administrativos.
 
 Products
 
 /products
 
-Catálogo público y gestión privada de inventario.
+Catálogo público y gestión de inventario.
 
 Orders
 
 /orders
 
-Procesamiento de compras y relación usuario-producto.
+Procesamiento de compras.
 
 Files
 
 /files
 
-Upload de imágenes vinculadas a productos.
+Upload de imágenes (multipart/form-data).
 
 🛠️ Instalación y Configuración
-
-Sigue estos pasos para levantar el proyecto en tu entorno local.
 
 1. Clonar el repositorio
 
@@ -88,93 +88,73 @@ npm install
 
 3. Configurar Variables de Entorno
 
-Crea un archivo llamado .env.development en la raíz del proyecto y configura tus credenciales:
+Crea un archivo .env.development en la raíz:
 
-# --- APP CONFIG ---
+# --- APP ---
 PORT=3000
 HOST=http://localhost
 
-# --- DATABASE (MySQL Railway/Local) ---
-DB_HOST=tu_host_mysql
-DB_PORT=3306
+# --- DATABASE (MySQL Railway) ---
+DB_HOST=tu_host_railway
+DB_PORT=puerto_railway
 DB_USERNAME=root
 DB_PASSWORD=tu_password
-DB_NAME=ecommerce_db
+DB_NAME=railway
 DB_SYNC=false
 
 # --- SEEDER ---
-# true = Carga datos iniciales al arrancar
 RUN_SEEDER=true
 
-# --- SEGURIDAD ---
-JWT_SECRET=secreto_super_seguro
+# --- AUTH ---
+JWT_SECRET=super_secreto
 JWT_EXPIRATION=1h
 
 # --- CLOUDINARY ---
-CLOUDINARY_CLOUD_NAME=tu_cloud_name
-CLOUDINARY_API_KEY=tu_api_key
-CLOUDINARY_API_SECRET=tu_api_secret
+CLOUDINARY_CLOUD_NAME=tu_cloud
+CLOUDINARY_API_KEY=tu_key
+CLOUDINARY_API_SECRET=tu_secret
 
 # --- AUTH0 ---
 AUTH0_DOMAIN=tu-dominio.auth0.com
-AUTH0_CLIENT_ID=tu_client_id
-AUTH0_CLIENT_SECRET=tu_client_secret
+AUTH0_CLIENT_ID=tu_id
+AUTH0_CLIENT_SECRET=tu_secret
 AUTH0_CALLBACK_URL=http://localhost:3000/callback
 
 
-4. Base de Datos y Migraciones
+4. Base de Datos
 
-Sincroniza el esquema con tu base de datos MySQL.
-
-# Ejecutar migraciones
 npm run migration:run
 
 
-5. Iniciar el Servidor
+5. Ejecutar
 
-# Modo desarrollo
 npm run start:dev
 
 
 📚 Documentación (Swagger)
 
-Con el servidor corriendo, visita la documentación interactiva:
+Con el servidor corriendo, entra a:
 
 👉 http://localhost:3000/api
 
-Authorize: Haz clic en el botón verde y pega tu token JWT (obtenido en /auth/signin).
+Clic en Authorize.
 
-Try it out: Prueba los endpoints directamente desde el navegador.
+Ingresa tu token JWT (obtenido en /auth/signin).
+
+Prueba los endpoints.
 
 🌱 Seeders (Datos de Prueba)
 
-El proyecto incluye datos pre-cargados para facilitar el testing.
+Configura RUN_SEEDER=true en tu .env y reinicia la app para cargar automáticamente:
 
-Automático:
-Configura RUN_SEEDER=true en el .env y reinicia la app.
+Roles (Admin/User)
 
-Manual (Vía API):
+Usuarios de prueba
 
-POST /seed/roles (Crea roles Admin/User)
+Categorías
 
-POST /seed/users (Crea usuario de prueba)
-
-POST /seed/categories (Crea categorías)
-
-POST /seed/products (Crea productos)
-
-🧪 Testing
-
-# Unit tests
-npm run test
-
-# e2e tests
-npm run test:e2e
-
-# Coverage
-npm run test:cov
-
+Productos
 
 <p align="center">
-Desarrollado con ❤️ para la especialización Backend de SoyHenry
+Desarrollado para la especialización backend de SoyHenry
 </p>
