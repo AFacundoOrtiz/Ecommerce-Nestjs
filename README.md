@@ -99,13 +99,15 @@ npm run start:dev
 ```
 ## 📚 Documentación (Swagger)
 
-Con el servidor corriendo, entra a:
+Explora y prueba la API interactiva en cualquiera de los siguientes entornos:
 
+🌍 **Producción (Demo en Vivo):**
+👉 **[https://ecommerce-nestjs-production.up.railway.app/api](https://ecommerce-nestjs-production.up.railway.app/api)**
+
+💻 **Entorno Local:**
 👉 **[http://localhost:3000/api](http://localhost:3000/api)**
 
-1. Clic en el botón verde **Authorize**.
-2. Ingresa tu token JWT (obtenido en `/auth/signin`).
-3. Prueba los endpoints.
+> **Nota:** Para probar endpoints protegidos, recuerda usar el botón `Authorize` con un token válido (obtenido en `/auth/signin`).
 
 ## 🌱 Seeders (Datos de Prueba)
 
