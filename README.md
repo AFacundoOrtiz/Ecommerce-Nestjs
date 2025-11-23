@@ -40,15 +40,15 @@
 
 ## 🛠️ Instalación y Configuración
 
-```bash
 ### 1. Clonar el repositorio
+```bash
 git clone <url-del-repositorio>
 cd Ecommerce-Nestjs
-
+```
 ### 2. Instalar dependencias
 ```bash
 npm install
-
+```
 ### 3. Configurar Variables de Entorno
 Crea un archivo `.env.development` en la raíz con el siguiente contenido:
 
@@ -84,17 +84,17 @@ AUTH0_DOMAIN=tu-dominio.auth0.com
 AUTH0_CLIENT_ID=tu_id
 AUTH0_CLIENT_SECRET=tu_secret
 AUTH0_CALLBACK_URL=http://localhost:3000/callback
-
+```
 ### 4. Base de Datos (Migraciones)
 Este proyecto usa MySQL. Asegúrate de ejecutar las migraciones:
 
 ```bash
 npm run migration:run
-
+```
 ### 5. Ejecutar Servidor
 ```bash
 npm run start:dev
-
+```
 ## 📚 Documentación (Swagger)
 
 Con el servidor corriendo, entra a:
@@ -116,7 +116,3 @@ El sistema incluye una carga automática de datos.
 **Nota:** Una vez cargados los datos, puedes cambiar la variable a `false` para iniciar más rápido.
 
 ---
-
-<p align="center">
-  Hecho con ❤️ para SoyHenry
-</p>
